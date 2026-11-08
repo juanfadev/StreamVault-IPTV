@@ -71,6 +71,7 @@ internal fun PlayerViewModel.tryAlternateStreamInternal(
         currentTitle = nextVariant.originalName.ifBlank { updatedChannel.name }
         playbackTitleFlow.value = currentTitle
         currentChannelFlow.value = updatedChannel
+        syncCombinedLiveProvider(updatedChannel)
         if (currentChannelIndex in channelList.indices) {
             channelList = channelList.mapIndexed { index, existing ->
                 if (index == currentChannelIndex || existing.logicalGroupId == updatedChannel.logicalGroupId) {
@@ -134,6 +135,17 @@ internal fun PlayerViewModel.tryAlternateStreamInternal(
 }
 
 internal fun PlayerViewModel.isCatchUpPlayback(): Boolean = isCatchUpPlayback.value
+
+/**
+ * Combined sources mix providers in one playlist and merge backup providers into one channel, so
+ * provider-scoped state (history, favorites, catch-up, EPG) follows the provider of the stream
+ * that is actually playing.
+ */
+internal fun PlayerViewModel.syncCombinedLiveProvider(channel: Channel) {
+    if (currentCombinedProfileId != null && channel.providerId > 0L) {
+        currentProviderId = channel.providerId
+    }
+}
 
 private fun PlayerViewModel.nextCatchUpVariant(): String? {
     return selectNextAlternateUrl(

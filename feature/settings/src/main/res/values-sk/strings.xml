@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Zobrazovať kategóriu Obľúbené</string>
     <string name="settings_show_favorites_category_subtitle">Zobrazovať virtuálnu skupinu Obľúbené v prehliadaní živého vysielania.</string>
     <string name="settings_show_live_source_switcher">Zobrazovať prehliadač živých zdrojov</string>
-    <string name="settings_show_live_source_switcher_subtitle">Zobrazovať prepínač zdrojov M3U v prehliadaní živého vysielania.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Zobrazovať prepínač poskytovateľov a kombinovaných zdrojov v prehliadaní živého vysielania.</string>
     <string name="settings_show_recent_channels_category">Zobrazovať kategóriu Nedávne kanály</string>
     <string name="settings_show_recent_channels_category_subtitle">Zobrazovať nedávno sledované kanály v prehliadaní živého vysielania a na domovskej obrazovke.</string>
     <string name="settings_time_format">Formát času</string>

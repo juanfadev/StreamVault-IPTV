@@ -44,7 +44,8 @@ internal fun selectNextLiveVariant(
     triedAlternativeStreams: Set<String>,
     failedStreamsThisSession: Map<String, Int>
 ): LiveChannelVariant? {
-    val eligibleVariants = variants.filter { variant ->
+    val orderedVariants = orderLiveVariantsForRecovery(variants, currentVariantId)
+    val eligibleVariants = orderedVariants.filter { variant ->
         variant.rawChannelId != currentVariantId &&
             variant.streamUrl.isNotBlank() &&
             variant.streamUrl != currentStreamUrl &&
@@ -52,7 +53,7 @@ internal fun selectNextLiveVariant(
             (failedStreamsThisSession[variant.streamUrl] ?: 0) == 0
     }
     if (eligibleVariants.isEmpty()) {
-        return variants.firstOrNull { variant ->
+        return orderedVariants.firstOrNull { variant ->
             variant.rawChannelId != currentVariantId &&
                 variant.streamUrl.isNotBlank() &&
                 variant.streamUrl != currentStreamUrl &&
@@ -60,9 +61,34 @@ internal fun selectNextLiveVariant(
         }
     }
 
-    return eligibleVariants.firstOrNull { liveVariantCodecPriority(it) == 2 }
-        ?: eligibleVariants.firstOrNull { liveVariantCodecPriority(it) == 1 }
-        ?: eligibleVariants.firstOrNull()
+    // Codec preference applies inside the first provider that still has an untried stream.
+    val nextProviderId = eligibleVariants.first().providerId
+    val providerVariants = eligibleVariants.filter { it.providerId == nextProviderId }
+    return providerVariants.firstOrNull { liveVariantCodecPriority(it) == 2 }
+        ?: providerVariants.firstOrNull { liveVariantCodecPriority(it) == 1 }
+        ?: providerVariants.firstOrNull()
+}
+
+/**
+ * Orders variants for live recovery. Combined sources merge the same channel from several
+ * providers (variants grouped by provider, in member priority order). After a failure, recovery
+ * moves to the provider that follows the current one, wrapping around, so consecutive failures
+ * rotate through the backup providers (A1 -> B1 -> C1 -> A2 -> B2 ...) instead of exhausting every
+ * quality variant of a provider that may be down as a whole. Single-provider channels keep their
+ * order unchanged.
+ */
+internal fun orderLiveVariantsForRecovery(
+    variants: List<LiveChannelVariant>,
+    currentVariantId: Long
+): List<LiveChannelVariant> {
+    val providerOrder = variants.map { it.providerId }.distinct()
+    if (providerOrder.size <= 1) return variants
+    val currentProviderId = variants.firstOrNull { it.rawChannelId == currentVariantId }?.providerId
+        ?: return variants
+    val startIndex = (providerOrder.indexOf(currentProviderId) + 1) % providerOrder.size
+    val rotatedProviders = providerOrder.drop(startIndex) + providerOrder.take(startIndex)
+    val variantsByProvider = variants.groupBy { it.providerId }
+    return rotatedProviders.flatMap { providerId -> variantsByProvider[providerId].orEmpty() }
 }
 
 internal fun selectNextLiveRecoveryCandidate(

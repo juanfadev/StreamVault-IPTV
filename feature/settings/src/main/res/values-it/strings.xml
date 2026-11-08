@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Mostra categoria Preferiti</string>
     <string name="settings_show_favorites_category_subtitle">Mostra il gruppo virtuale Preferiti nella navigazione della TV in diretta.</string>
     <string name="settings_show_live_source_switcher">Mostra browser sorgente live</string>
-    <string name="settings_show_live_source_switcher_subtitle">Mostra il selettore della sorgente M3U sopra le categorie TV in diretta.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Mostra il selettore di provider e sorgente combinata sopra le categorie TV in diretta.</string>
     <string name="settings_show_recent_channels_category">Mostra categoria Canali recenti</string>
     <string name="settings_show_recent_channels_category_subtitle">Mostra i canali visualizzati di recente nella navigazione TV live e nella schermata Home.</string>
     <string name="settings_time_format">Formato ora</string>

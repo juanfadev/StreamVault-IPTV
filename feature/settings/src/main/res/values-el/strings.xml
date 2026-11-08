@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Εμφάνιση κατηγορίας Αγαπημένα</string>
     <string name="settings_show_favorites_category_subtitle">Εμφάνιση της εικονικής ομάδας Αγαπημένα στην περιήγηση της ζωντανής TV.</string>
     <string name="settings_show_live_source_switcher">Εμφάνιση περιηγητή ζωντανής πηγής</string>
-    <string name="settings_show_live_source_switcher_subtitle">Εμφάνιση του εναλλάκτη πηγής M3U πάνω από τις κατηγορίες Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Εμφάνιση του εναλλάκτη παρόχου και συνδυασμένης πηγής πάνω από τις κατηγορίες Live TV.</string>
     <string name="settings_show_recent_channels_category">Εμφάνιση κατηγορίας Πρόσφατα Κανάλια</string>
     <string name="settings_show_recent_channels_category_subtitle">Εμφάνιση πρόσφατα παρακολουθημένων καναλιών στο Live TV και στην Αρχική.</string>
     <string name="settings_time_format">Μορφή Ώρας</string>

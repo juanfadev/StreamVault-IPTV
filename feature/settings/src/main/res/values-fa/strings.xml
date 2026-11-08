@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">نمایش دسته موردعلاقه‌ها</string>
     <string name="settings_show_favorites_category_subtitle">نمایش گروه مجازی موردعلاقه‌ها در مرور پخش زنده.</string>
     <string name="settings_show_live_source_switcher">نمایش مرورگر منبع زنده</string>
-    <string name="settings_show_live_source_switcher_subtitle">نمایش تغییردهنده منبع M3U در مرور پخش زنده.</string>
+    <string name="settings_show_live_source_switcher_subtitle">نمایش تغییردهنده ارائه‌دهنده و منبع ترکیبی در مرور پخش زنده.</string>
     <string name="settings_show_recent_channels_category">نمایش دسته کانال‌های اخیر</string>
     <string name="settings_show_recent_channels_category_subtitle">نمایش کانال‌های اخیراً تماشاشده در مرور پخش زنده و صفحه اصلی.</string>
     <string name="settings_time_format">قالب زمان</string>

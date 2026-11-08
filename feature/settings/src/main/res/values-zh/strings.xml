@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">显示收藏分类</string>
     <string name="settings_show_favorites_category_subtitle">在直播电视浏览中显示虚拟的收藏分组。</string>
     <string name="settings_show_live_source_switcher">显示直播源浏览器</string>
-    <string name="settings_show_live_source_switcher_subtitle">在直播电视分类上方显示 M3U 源切换器。</string>
+    <string name="settings_show_live_source_switcher_subtitle">在直播电视分类上方显示提供商和组合源切换器。</string>
     <string name="settings_show_recent_channels_category">显示最近频道类别</string>
     <string name="settings_show_recent_channels_category_subtitle">在直播电视浏览和主屏幕上显示最近观看的频道。</string>
     <string name="settings_time_format">时间格式</string>

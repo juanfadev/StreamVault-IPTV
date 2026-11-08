@@ -62,6 +62,9 @@ data class Channel(
                 url = variant.streamUrl
             )
         }.distinctBy { it.url ?: "${it.height}:${it.label}" }
+        // Combined sources merge variants from several providers into one channel; selecting a
+        // variant from another provider moves the channel identity to that provider.
+        val crossesProvider = selected.providerId > 0L && selected.providerId != providerId
         return copy(
             id = selected.rawChannelId,
             streamUrl = selected.streamUrl,
@@ -72,6 +75,8 @@ data class Channel(
             catchUpSource = selected.catchUpSource,
             catchUpType = selected.catchUpType,
             catchUpCorrectionSeconds = selected.catchUpCorrectionSeconds,
+            providerId = if (crossesProvider) selected.providerId else providerId,
+            logicalGroupId = if (crossesProvider) selected.logicalGroupId else logicalGroupId,
             selectedVariantId = selected.rawChannelId,
             errorCount = selected.errorCount,
             qualityOptions = updatedQualityOptions,
@@ -80,6 +85,21 @@ data class Channel(
                 .distinct(),
             streamId = selected.streamId
         )
+    }
+
+    /**
+     * Narrows a channel to the variants of one provider. Single-provider channels are returned
+     * unchanged when they belong to [targetProviderId]; merged channels keep only that provider's
+     * variants. Returns null when the provider contributes nothing.
+     */
+    fun restrictedToProvider(targetProviderId: Long): Channel? {
+        if (variants.all { it.providerId == providerId }) {
+            return takeIf { providerId == targetProviderId }
+        }
+        val kept = variants.filter { it.providerId == targetProviderId }
+        if (kept.isEmpty()) return null
+        val preferred = kept.firstOrNull { it.rawChannelId == selectedVariantId } ?: kept.first()
+        return copy(variants = kept).withSelectedVariant(preferred.rawChannelId)
     }
 }
 

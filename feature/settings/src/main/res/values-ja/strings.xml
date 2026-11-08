@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">お気に入りカテゴリを表示</string>
     <string name="settings_show_favorites_category_subtitle">ライブ TV のブラウズに仮想のお気に入りグループを表示します。</string>
     <string name="settings_show_live_source_switcher">ライブソースブラウザーを表示</string>
-    <string name="settings_show_live_source_switcher_subtitle">Live TVカテゴリの上にM3Uソース切り替えを表示します。</string>
+    <string name="settings_show_live_source_switcher_subtitle">Live TVカテゴリの上にプロバイダーと結合ソースの切り替えを表示します。</string>
     <string name="settings_show_recent_channels_category">最近のチャンネルカテゴリーを表示</string>
     <string name="settings_show_recent_channels_category_subtitle">最近視聴したチャンネルをライブTVブラウズとホーム画面に表示します。</string>
     <string name="settings_time_format">時刻形式</string>

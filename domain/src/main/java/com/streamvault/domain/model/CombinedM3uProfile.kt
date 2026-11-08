@@ -49,3 +49,7 @@ data class CombinedCategory(
     val category: Category,
     val bindings: List<CombinedCategoryBinding>
 )
+
+/** Provider types whose live channels can be combined into one source and back each other up. */
+val ProviderType.supportsCombinedLiveSource: Boolean
+    get() = this == ProviderType.M3U || this == ProviderType.XTREAM_CODES || this == ProviderType.STALKER_PORTAL

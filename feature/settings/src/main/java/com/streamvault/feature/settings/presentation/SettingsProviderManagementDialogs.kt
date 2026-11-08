@@ -29,10 +29,12 @@ public fun SettingsProviderManagementDialogs(
         uiState.providers.firstOrNull { it.id == providerId }
     }
 
+    BulkXtreamImportDialogHost()
+
     if (providerState.showCreateCombinedDialog) {
         var isCreating by remember { mutableStateOf(false) }
         CreateCombinedM3uDialog(
-            providers = uiState.availableM3uProviders,
+            providers = uiState.availableCombinableProviders,
             isSubmitting = isCreating,
             onDismiss = { providerState.showCreateCombinedDialog = false },
             onCreate = { name, providerIds ->
@@ -70,7 +72,7 @@ public fun SettingsProviderManagementDialogs(
             var isAddingMember by remember(selectedProfile.id) { mutableStateOf(false) }
             AddCombinedProviderDialog(
                 profile = selectedProfile,
-                availableProviders = uiState.availableM3uProviders,
+                availableProviders = uiState.availableCombinableProviders,
                 isSubmitting = isAddingMember,
                 onDismiss = { providerState.showAddCombinedMemberDialog = false },
                 onAddProvider = { providerId ->

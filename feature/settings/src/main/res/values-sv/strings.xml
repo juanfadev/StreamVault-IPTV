@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Visa kategorin Favoriter</string>
     <string name="settings_show_favorites_category_subtitle">Visa den virtuella gruppen Favoriter i Live TV-bläddring.</string>
     <string name="settings_show_live_source_switcher">Visa webbläsare för livekälla</string>
-    <string name="settings_show_live_source_switcher_subtitle">Visa M3U-källväxlaren ovanför kategorierna för Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Visa växlaren för leverantörer och kombinerade källor ovanför kategorierna för Live TV.</string>
     <string name="settings_show_recent_channels_category">Visa kategorin Senaste kanaler</string>
     <string name="settings_show_recent_channels_category_subtitle">Visa nyligen tittade kanaler i Live TV och på startsidan.</string>
     <string name="settings_time_format">Tidsformat</string>

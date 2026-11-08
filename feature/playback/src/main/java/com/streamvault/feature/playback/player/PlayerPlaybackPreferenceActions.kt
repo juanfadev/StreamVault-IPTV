@@ -338,6 +338,7 @@ fun PlayerViewModel.selectLiveVariant(rawChannelId: Long) {
     currentTitle = updatedChannel.currentVariant?.originalName ?: updatedChannel.name
     playbackTitleFlow.value = currentTitle
     currentChannelFlow.value = updatedChannel
+    syncCombinedLiveProvider(updatedChannel)
     if (currentChannelIndex in channelList.indices) {
         channelList = channelList.mapIndexed { index, existing ->
             if (index == currentChannelIndex || existing.logicalGroupId == updatedChannel.logicalGroupId) {

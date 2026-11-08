@@ -225,7 +225,7 @@
     <string name="settings_show_favorites_category">Show Favorites category</string>
     <string name="settings_show_favorites_category_subtitle">Display the virtual Favorites group in Live TV browsing.</string>
     <string name="settings_show_live_source_switcher">Show Live Source Browser</string>
-    <string name="settings_show_live_source_switcher_subtitle">Display the M3U source switcher inside Live TV browsing.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Display the provider and combined source switcher inside Live TV browsing.</string>
     <string name="settings_show_recent_channels_category">Show Recent Channels category</string>
     <string name="settings_show_recent_channels_category_subtitle">Display recently watched channels in Live TV browsing and on the Home screen.</string>
     <string name="settings_time_format">Time Format</string>

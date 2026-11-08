@@ -275,6 +275,7 @@ internal fun PlayerViewModel.changeChannel(index: Int, isAutoFallback: Boolean =
     playerPlaybackContextCoordinator.clearSelectedCatchUpProgram()
     updateStreamClass("Primary")
     currentChannelFlow.value = channel
+    syncCombinedLiveProvider(channel)
     refreshCurrentChannelRecording()
     displayChannelNumberFlow.value = resolveChannelNumber(channel, index)
     recentChannelsFlow.update { channels -> channels.filterNot { it.id == channel.id } }

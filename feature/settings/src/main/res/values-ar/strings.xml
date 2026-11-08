@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">إظهار فئة المفضلة</string>
     <string name="settings_show_favorites_category_subtitle">عرض مجموعة المفضلة الافتراضية في تصفح البث المباشر.</string>
     <string name="settings_show_live_source_switcher">إظهار متصفح المصدر المباشر</string>
-    <string name="settings_show_live_source_switcher_subtitle">عرض مبدّل مصدر M3U أعلى فئات البث المباشر.</string>
+    <string name="settings_show_live_source_switcher_subtitle">عرض مبدّل المزوّد والمصدر المدمج أعلى فئات البث المباشر.</string>
     <string name="settings_show_recent_channels_category">عرض فئة القنوات الأخيرة</string>
     <string name="settings_show_recent_channels_category_subtitle">عرض القنوات المشاهدة مؤخراً في تصفح التلفزيون المباشر وعلى الشاشة الرئيسية.</string>
     <string name="settings_time_format">تنسيق الوقت</string>

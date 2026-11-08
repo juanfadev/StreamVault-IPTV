@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Darts</string>
     <string name="live_sports_cycling">Cycling</string>
     <string name="epg_recording_scheduled_notice">Recording scheduled: %1$s</string>     <string name="epg_recording_failed_notice">Failed to schedule recording</string>
+    <string name="live_source_subtitle_provider">Provider</string>
+    <string name="live_source_subtitle_combined">Combined source</string>
 </resources>

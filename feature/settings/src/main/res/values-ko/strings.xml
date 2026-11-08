@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">즐겨찾기 카테고리 표시</string>
     <string name="settings_show_favorites_category_subtitle">라이브 TV 탐색에서 가상 즐겨찾기 그룹을 표시합니다.</string>
     <string name="settings_show_live_source_switcher">라이브 소스 브라우저 표시</string>
-    <string name="settings_show_live_source_switcher_subtitle">라이브 TV 카테고리 위에 M3U 소스 전환기를 표시합니다.</string>
+    <string name="settings_show_live_source_switcher_subtitle">라이브 TV 카테고리 위에 공급자 및 결합된 소스 전환기를 표시합니다.</string>
     <string name="settings_show_recent_channels_category">최근 채널 카테고리 표시</string>
     <string name="settings_show_recent_channels_category_subtitle">최근 시청한 채널을 라이브 TV 탐색 및 홈 화면에 표시합니다.</string>
     <string name="settings_time_format">시간 형식</string>

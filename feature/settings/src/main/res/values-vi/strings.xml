@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Hiện danh mục Yêu thích</string>
     <string name="settings_show_favorites_category_subtitle">Hiển thị nhóm Yêu thích ảo khi duyệt TV trực tiếp.</string>
     <string name="settings_show_live_source_switcher">Hiển thị trình duyệt nguồn trực tiếp</string>
-    <string name="settings_show_live_source_switcher_subtitle">Hiển thị bộ chuyển nguồn M3U phía trên các danh mục Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Hiển thị bộ chuyển nhà cung cấp và nguồn kết hợp phía trên các danh mục Live TV.</string>
     <string name="settings_show_recent_channels_category">Hiện danh mục Kênh Gần Đây</string>
     <string name="settings_show_recent_channels_category_subtitle">Hiển thị kênh đã xem gần đây trong TV Trực Tiếp và Màn Hình Chính.</string>
     <string name="settings_time_format">Định Dạng Giờ</string>

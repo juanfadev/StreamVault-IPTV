@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Zobrazit kategorii Oblíbené</string>
     <string name="settings_show_favorites_category_subtitle">Zobrazit virtuální skupinu Oblíbené při procházení živé TV.</string>
     <string name="settings_show_live_source_switcher">Zobrazit prohlížeč živých zdrojů</string>
-    <string name="settings_show_live_source_switcher_subtitle">Zobrazit přepínač zdrojů M3U nad kategoriemi Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Zobrazit přepínač poskytovatelů a kombinovaných zdrojů nad kategoriemi Live TV.</string>
     <string name="settings_show_recent_channels_category">Zobrazit kategorii Nedávné kanály</string>
     <string name="settings_show_recent_channels_category_subtitle">Zobrazit nedávno sledované kanály při procházení živé TV a na domovské obrazovce.</string>
     <string name="settings_time_format">Formát času</string>

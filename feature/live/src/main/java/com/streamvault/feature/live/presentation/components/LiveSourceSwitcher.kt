@@ -44,6 +44,8 @@ import com.streamvault.core.ui.design.browse.Primary
 import com.streamvault.core.ui.design.browse.SurfaceElevated
 import com.streamvault.domain.model.ActiveLiveSource
 import com.streamvault.domain.model.ActiveLiveSourceOption
+import com.streamvault.feature.live.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun LiveSourceSwitcher(
@@ -157,7 +159,13 @@ private fun LiveSourceItem(
         Row(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = option.title, style = MaterialTheme.typography.bodyMedium, color = if (isFocused || isSelected) Primary else OnBackground)
-                option.subtitle?.takeIf { it.isNotBlank() }?.let { Text(text = it, style = MaterialTheme.typography.labelSmall, color = OnSurfaceDim) }
+                val subtitle = option.subtitle?.takeIf { it.isNotBlank() } ?: stringResource(
+                    when (option.source) {
+                        is ActiveLiveSource.ProviderSource -> R.string.live_source_subtitle_provider
+                        is ActiveLiveSource.CombinedM3uSource -> R.string.live_source_subtitle_combined
+                    }
+                )
+                Text(text = subtitle, style = MaterialTheme.typography.labelSmall, color = OnSurfaceDim)
             }
             Text(text = when { isSelected -> selectedLabel; !option.isEnabled -> unavailableLabel; else -> "" }, style = MaterialTheme.typography.labelSmall, color = if (isSelected) Primary else OnSurfaceDim)
         }

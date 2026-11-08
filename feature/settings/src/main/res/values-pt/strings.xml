@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Mostrar categoria Favoritos</string>
     <string name="settings_show_favorites_category_subtitle">Exibe o grupo virtual Favoritos na navegação da TV ao vivo.</string>
     <string name="settings_show_live_source_switcher">Mostrar Navegador de Fonte ao Vivo</string>
-    <string name="settings_show_live_source_switcher_subtitle">Exibe o seletor de fonte M3U acima das categorias de TV ao vivo.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Exibe o seletor de provedor e fonte combinada acima das categorias de TV ao vivo.</string>
     <string name="settings_show_recent_channels_category">Mostrar categoria Canais recentes</string>
     <string name="settings_show_recent_channels_category_subtitle">Exibe canais assistidos recentemente na navegação de TV ao vivo e na tela inicial.</string>
     <string name="settings_time_format">Formato de hora</string>

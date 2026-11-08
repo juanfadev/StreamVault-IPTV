@@ -85,8 +85,8 @@ internal fun registerCombinedProfileObservers(
     }
 
     scope.launch {
-        combinedM3uRepository.getAvailableM3uProviders().collect { providers ->
-            uiState.update { it.copy(availableM3uProviders = providers) }
+        combinedM3uRepository.getAvailableCombinableProviders().collect { providers ->
+            uiState.update { it.copy(availableCombinableProviders = providers) }
         }
     }
 

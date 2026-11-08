@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Darts</string>
     <string name="live_sports_cycling">Kerékpározás</string>
     <string name="epg_recording_scheduled_notice">FelvÃ©tel Ã¼temezve: %1$s</string>     <string name="epg_recording_failed_notice">Nem sikerÃ¼lt Ã¼temezni a felvÃ©telt</string>
+    <string name="live_source_subtitle_provider">Szolgáltató</string>
+    <string name="live_source_subtitle_combined">Kombinált forrás</string>
 </resources>

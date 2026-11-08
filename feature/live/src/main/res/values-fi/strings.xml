@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Darts</string>
     <string name="live_sports_cycling">Pyöräily</string>
     <string name="epg_recording_scheduled_notice">Tallennus ajastettu: %1$s</string>     <string name="epg_recording_failed_notice">Tallennusta ei voitu ajastaa</string>
+    <string name="live_source_subtitle_provider">Palveluntarjoaja</string>
+    <string name="live_source_subtitle_combined">Yhdistetty lähde</string>
 </resources>

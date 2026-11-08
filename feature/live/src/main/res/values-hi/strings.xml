@@ -319,4 +319,6 @@
     <string name="live_sports_darts">डार्ट्स</string>
     <string name="live_sports_cycling">साइकिलिंग</string>
     <string name="epg_recording_scheduled_notice">à¤°à¤¿à¤•à¥‰à¤°à¥à¤¡à¤¿à¤‚à¤— à¤¶à¥‡à¤¡à¥à¤¯à¥‚à¤² à¤•à¥€ à¤—à¤ˆ: %1$s</string>     <string name="epg_recording_failed_notice">à¤°à¤¿à¤•à¥‰à¤°à¥à¤¡à¤¿à¤‚à¤— à¤¶à¥‡à¤¡à¥à¤¯à¥‚à¤² à¤¨à¤¹à¥€à¤‚ à¤¹à¥‹ à¤¸à¤•à¥€</string>
+    <string name="live_source_subtitle_provider">प्रदाता</string>
+    <string name="live_source_subtitle_combined">संयुक्त स्रोत</string>
 </resources>

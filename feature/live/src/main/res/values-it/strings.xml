@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Freccette</string>
     <string name="live_sports_cycling">Ciclismo</string>
     <string name="epg_recording_scheduled_notice">Registrazione programmata: %1$s</string>     <string name="epg_recording_failed_notice">Impossibile programmare la registrazione</string>
+    <string name="live_source_subtitle_provider">Provider</string>
+    <string name="live_source_subtitle_combined">Sorgente combinata</string>
 </resources>

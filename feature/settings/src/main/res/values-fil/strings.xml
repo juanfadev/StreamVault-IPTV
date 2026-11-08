@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Ipakita ang kategoryang Favorites</string>
     <string name="settings_show_favorites_category_subtitle">Ipakita ang virtual na grupong Favorites sa Live TV browsing.</string>
     <string name="settings_show_live_source_switcher">Ipakita ang Live Source Browser</string>
-    <string name="settings_show_live_source_switcher_subtitle">Ipakita ang M3U source switcher sa loob ng Live TV browsing.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Ipakita ang provider at combined source switcher sa loob ng Live TV browsing.</string>
     <string name="settings_show_recent_channels_category">Ipakita ang kategoryang Recent Channels</string>
     <string name="settings_show_recent_channels_category_subtitle">Ipakita ang mga kamakailang napanood na channel sa Live TV browsing at sa Home screen.</string>
     <string name="settings_time_format">Format ng Oras</string>

@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Darts</string>
     <string name="live_sports_cycling">Radsport</string>
     <string name="epg_recording_scheduled_notice">Aufnahme geplant: %1$s</string>     <string name="epg_recording_failed_notice">Aufnahme konnte nicht geplant werden</string>
+    <string name="live_source_subtitle_provider">Anbieter</string>
+    <string name="live_source_subtitle_combined">Kombinierte Quelle</string>
 </resources>

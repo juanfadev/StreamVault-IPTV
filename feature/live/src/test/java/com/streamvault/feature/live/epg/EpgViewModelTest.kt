@@ -810,6 +810,9 @@ class EpgViewModelTest {
                 else -> flowOf(emptyList())
             }
         }
+        whenever(combinedM3uRepository.withCombinedBackups(eq(profile.id), any())).thenAnswer { invocation ->
+            invocation.getArgument<kotlinx.coroutines.flow.Flow<List<Channel>>>(1)
+        }
         whenever(channelRepository.getChannelsByIds(listOf(providerOneChannel.id, providerTwoChannel.id))).thenReturn(
             flowOf(listOf(providerOneChannel, providerTwoChannel))
         )

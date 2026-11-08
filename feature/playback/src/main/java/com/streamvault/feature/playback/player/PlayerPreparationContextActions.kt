@@ -118,7 +118,10 @@ internal fun PlayerViewModel.finalizePreparedPlaybackContext(
         }
 
         playbackSessionScope(requestVersion)?.launch {
-            val channel = playerChannelCoordinator.getChannel(internalChannelId)
+            val channel = preferMergedPlaylistChannel(
+                resolved = playerChannelCoordinator.getChannel(internalChannelId),
+                internalChannelId = internalChannelId
+            )
             if (!isActivePlaybackSession(requestVersion, streamUrl)) return@launch
             currentChannelFlow.value = channel
             refreshCurrentChannelRecording()
@@ -151,4 +154,22 @@ internal fun PlayerViewModel.finalizePreparedPlaybackContext(
     }
 
     startProgressTracking()
+}
+
+/**
+ * A combined source playlist holds the channel merged with its backup providers; the repository
+ * lookup only knows one provider. Keep the merged entry so recovery can fail over across providers.
+ */
+private fun PlayerViewModel.preferMergedPlaylistChannel(
+    resolved: com.streamvault.domain.model.Channel?,
+    internalChannelId: Long
+): com.streamvault.domain.model.Channel? {
+    if (currentCombinedProfileId == null) return resolved
+    val merged = channelList.firstOrNull { it.id == internalChannelId }
+        ?: channelList.firstOrNull { internalChannelId in it.allVariantRawIds() }
+        ?: return resolved
+    if (merged.variants.size <= (resolved?.variants?.size ?: 0)) return resolved
+    return merged.takeIf { it.id == internalChannelId }
+        ?: merged.withSelectedVariant(internalChannelId)
+        ?: resolved
 }

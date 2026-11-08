@@ -319,4 +319,6 @@
     <string name="live_sports_darts">הטלת חצים</string>
     <string name="live_sports_cycling">רכיבת אופניים</string>
     <string name="epg_recording_scheduled_notice">×”×”×§×œ×˜×” ×ª×•×–×ž× ×”: %1$s</string>     <string name="epg_recording_failed_notice">×œ× × ×™×ª×Ÿ ×œ×ª×–×ž×Ÿ ××ª ×”×”×§×œ×˜×”</string>
+    <string name="live_source_subtitle_provider">ספק</string>
+    <string name="live_source_subtitle_combined">מקור משולב</string>
 </resources>

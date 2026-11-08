@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Kedvencek kategória megjelenítése</string>
     <string name="settings_show_favorites_category_subtitle">A virtuális Kedvencek csoport megjelenítése az élő TV böngészésben.</string>
     <string name="settings_show_live_source_switcher">Élő forrás böngésző megjelenítése</string>
-    <string name="settings_show_live_source_switcher_subtitle">Az M3U forrásváltó megjelenítése az Élő TV kategóriák felett.</string>
+    <string name="settings_show_live_source_switcher_subtitle">A szolgáltató- és kombináltforrás-váltó megjelenítése az Élő TV kategóriák felett.</string>
     <string name="settings_show_recent_channels_category">Legutóbbi csatornák kategória megjelenítése</string>
     <string name="settings_show_recent_channels_category_subtitle">A nemrég nézett csatornák megjelenítése az élő TV böngészőben és a főképernyőn.</string>
     <string name="settings_time_format">Időformátum</string>

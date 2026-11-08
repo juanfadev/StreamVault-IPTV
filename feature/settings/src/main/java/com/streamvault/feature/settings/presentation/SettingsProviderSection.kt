@@ -1,5 +1,7 @@
 package com.streamvault.feature.settings.presentation
 
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -70,12 +72,20 @@ public fun LazyListScope.providerSection(
                     color = OnSurfaceDim,
                 )
             }
-            CompactSettingsActionChip(
-                label = stringResource(R.string.settings_add_provider),
-                accent = Primary,
-                onClick = onAddProvider,
-                modifier = if (targetItemId == "sources.add") targetFocusModifier else Modifier,
-            )
+            val bulkImportViewModel: BulkXtreamImportViewModel = hiltViewModel()
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                CompactSettingsActionChip(
+                    label = stringResource(R.string.settings_bulk_import),
+                    accent = Primary,
+                    onClick = bulkImportViewModel::open,
+                )
+                CompactSettingsActionChip(
+                    label = stringResource(R.string.settings_add_provider),
+                    accent = Primary,
+                    onClick = onAddProvider,
+                    modifier = if (targetItemId == "sources.add") targetFocusModifier else Modifier,
+                )
+            }
         }
     }
     if (uiState.providers.isEmpty()) {
@@ -193,10 +203,10 @@ public fun LazyListScope.providerSection(
             Spacer(modifier = Modifier.height(18.dp))
             AutomaticSyncSettingsCard(viewModel = viewModel, provider = selectedProvider)
             Spacer(modifier = Modifier.height(18.dp))
-            if (uiState.availableM3uProviders.size > 1 || uiState.combinedProfiles.isNotEmpty()) {
+            if (uiState.availableCombinableProviders.size > 1 || uiState.combinedProfiles.isNotEmpty()) {
                 CombinedM3uProfilesCard(
                     profiles = uiState.combinedProfiles,
-                    availableProviders = uiState.availableM3uProviders,
+                    availableProviders = uiState.availableCombinableProviders,
                     selectedProfileId = providerState.selectedCombinedProfileId,
                     activeLiveSource = uiState.activeLiveSource,
                     onSelectProfile = { providerState.selectedCombinedProfileId = it },

@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Favoriler kategorisini göster</string>
     <string name="settings_show_favorites_category_subtitle">Canlı TV gezinmesinde sanal Favoriler grubunu görüntüle.</string>
     <string name="settings_show_live_source_switcher">Canlı Kaynak Tarayıcısını Göster</string>
-    <string name="settings_show_live_source_switcher_subtitle">M3U kaynak değiştiricisini Canlı TV kategorilerinin üstünde gösterin.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Sağlayıcı ve birleşik kaynak değiştiricisini Canlı TV kategorilerinin üstünde gösterin.</string>
     <string name="settings_show_recent_channels_category">Son Kanallar kategorisini göster</string>
     <string name="settings_show_recent_channels_category_subtitle">Son izlenen kanalları Canlı TV gezinmesinde ve Ana Ekran\'da görüntüle.</string>
     <string name="settings_time_format">Saat Biçimi</string>

@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Пикадо</string>
     <string name="live_sports_cycling">Бициклизам</string>
     <string name="epg_recording_scheduled_notice">Ð¡Ð½Ð¸Ð¼Ð°ÑšÐµ Ð·Ð°ÐºÐ°Ð·Ð°Ð½Ð¾: %1$s</string>     <string name="epg_recording_failed_notice">Ð¡Ð½Ð¸Ð¼Ð°ÑšÐµ Ð½Ð¸Ñ˜Ðµ Ð¼Ð¾Ð³Ð»Ð¾ Ð±Ð¸Ñ‚Ð¸ Ð·Ð°ÐºÐ°Ð·Ð°Ð½Ð¾</string>
+    <string name="live_source_subtitle_provider">Провајдер</string>
+    <string name="live_source_subtitle_combined">Комбиновани извор</string>
 </resources>

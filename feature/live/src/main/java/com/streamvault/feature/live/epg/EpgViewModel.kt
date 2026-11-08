@@ -1313,16 +1313,23 @@ class EpgViewModel @Inject constructor(
             if (flows.isEmpty()) {
                 kotlinx.coroutines.flow.flowOf(emptyList<Channel>())
             } else {
-                combine(flows) { arrays: Array<List<Channel>> -> arrays.toList().flatMap { it } }
+                // The same merged channel can live in several combined categories.
+                combine(flows) { arrays: Array<List<Channel>> -> arrays.toList().flatMap { it }.distinctBy { it.id } }
             }
         } else if (categoryId == VirtualCategoryIds.FAVORITES) {
-            observeLiveFavorites(providerIds)
-                .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
-                .flatMapLatest(::loadGuideChannelsByOrderedIds)
+            combinedM3uRepository.withCombinedBackups(
+                profileId,
+                observeLiveFavorites(providerIds)
+                    .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
+                    .flatMapLatest(::loadGuideChannelsByOrderedIds)
+            )
         } else if (categoryId < 0L) {
-            favoriteRepository.getFavoritesByGroup(-categoryId)
-                .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
-                .flatMapLatest(::loadGuideChannelsByOrderedIds)
+            combinedM3uRepository.withCombinedBackups(
+                profileId,
+                favoriteRepository.getFavoritesByGroup(-categoryId)
+                    .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
+                    .flatMapLatest(::loadGuideChannelsByOrderedIds)
+            )
         } else {
             val combinedCategory = combinedCategoriesById[categoryId]
             if (combinedCategory == null) {

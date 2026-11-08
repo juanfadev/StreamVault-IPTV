@@ -319,4 +319,6 @@
     <string name="live_sports_darts">飞镖</string>
     <string name="live_sports_cycling">自行车</string>
     <string name="epg_recording_scheduled_notice">å·²é¢„çº¦å½•åˆ¶ï¼š%1$s</string>     <string name="epg_recording_failed_notice">æ— æ³•é¢„çº¦å½•åˆ¶</string>
+    <string name="live_source_subtitle_provider">提供商</string>
+    <string name="live_source_subtitle_combined">组合源</string>
 </resources>

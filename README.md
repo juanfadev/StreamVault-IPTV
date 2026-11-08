@@ -45,7 +45,7 @@ Built for Android TV first, StreamVault focuses on the things generic IPTV apps 
 
 - Android TV-first interface with D-pad-friendly focus, navigation, and playback flows
 - Provider support for `Xtream Codes`, `Stalker Portal`, `Jellyfin`, and `M3U` sources, including local playlist files
-- Combined M3U live-source support with optional in-browser source switching for merged Live TV setups
+- Combined live-source support (M3U, Xtream Codes, Stalker) with optional in-browser source switching for merged Live TV setups
 - Jellyfin onboarding with password sign-in or Quick Connect QR/code flow for TV-friendly setup
 - Fast live-TV browsing with preview mode, favorites, recent channels, custom groups, and pinned categories
 - Transparent full-guide overlay that can open over live playback without leaving the player
@@ -75,7 +75,7 @@ Built for Android TV first, StreamVault focuses on the things generic IPTV apps 
 - Quick Stalker setup from supported playback or export links
 - Separate onboarding and sync flows for live channels, movies, series, and guide data
 - Fast switching between providers with provider-scoped settings
-- Combined M3U profiles for merging multiple M3U providers into a single Live TV source
+- Combined sources that merge several M3U, Xtream Codes or Stalker providers into one Live TV source, listing each channel once and failing over to the next provider when a stream breaks
 - Scheduled background refreshes keep saved provider catalogs and guide data up to date
 - QR-based provider pairing from a phone on the same LAN for faster TV setup
 

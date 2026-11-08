@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Afișați categoria Favorite</string>
     <string name="settings_show_favorites_category_subtitle">Afișați grupul virtual Favorite în navigarea TV în direct.</string>
     <string name="settings_show_live_source_switcher">Afișează browserul sursei live</string>
-    <string name="settings_show_live_source_switcher_subtitle">Afișează comutatorul sursei M3U deasupra categoriilor Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Afișează comutatorul de furnizor și sursă combinată deasupra categoriilor Live TV.</string>
     <string name="settings_show_recent_channels_category">Afișează categoria Canale Recente</string>
     <string name="settings_show_recent_channels_category_subtitle">Afișează canalele vizionate recent în navigarea Live TV și pe ecranul principal.</string>
     <string name="settings_time_format">Format Oră</string>

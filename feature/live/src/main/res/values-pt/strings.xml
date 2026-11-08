@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Dardos</string>
     <string name="live_sports_cycling">Ciclismo</string>
     <string name="epg_recording_scheduled_notice">GravaÃ§Ã£o programada: %1$s</string>     <string name="epg_recording_failed_notice">NÃ£o foi possÃ­vel programar a gravaÃ§Ã£o</string>
+    <string name="live_source_subtitle_provider">Provedor</string>
+    <string name="live_source_subtitle_combined">Fonte combinada</string>
 </resources>

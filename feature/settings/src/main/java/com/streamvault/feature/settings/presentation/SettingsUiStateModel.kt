@@ -69,7 +69,7 @@ data class SettingsUiState(
     val providers: List<Provider> = emptyList(),
     val providerAvailabilityById: Map<Long, ProviderAvailabilityUiState> = emptyMap(),
     val combinedProfiles: List<CombinedM3uProfile> = emptyList(),
-    val availableM3uProviders: List<Provider> = emptyList(),
+    val availableCombinableProviders: List<Provider> = emptyList(),
     val activeProviderId: Long? = null,
     val activeLiveSource: ActiveLiveSource? = null,
     val isSyncing: Boolean = false,

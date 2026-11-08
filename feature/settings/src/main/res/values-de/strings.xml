@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Favoriten-Kategorie anzeigen</string>
     <string name="settings_show_favorites_category_subtitle">Die virtuelle Favoriten-Gruppe beim Durchsuchen von Live-TV anzeigen.</string>
     <string name="settings_show_live_source_switcher">Live-Quellen-Browser anzeigen</string>
-    <string name="settings_show_live_source_switcher_subtitle">Den M3U-Quellenwechsler über den Live-TV-Kategorien anzeigen.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Den Wechsler für Anbieter und kombinierte Quellen über den Live-TV-Kategorien anzeigen.</string>
     <string name="settings_show_recent_channels_category">Kategorie Zuletzt gesehene Sender anzeigen</string>
     <string name="settings_show_recent_channels_category_subtitle">Zuletzt angesehene Sender in der Live-TV-Ansicht und auf dem Startbildschirm anzeigen.</string>
     <string name="settings_time_format">Zeitformat</string>

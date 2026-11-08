@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Показывать категорию «Избранное»</string>
     <string name="settings_show_favorites_category_subtitle">Показывать виртуальную группу «Избранное» при просмотре Live TV.</string>
     <string name="settings_show_live_source_switcher">Показывать браузер источников Live</string>
-    <string name="settings_show_live_source_switcher_subtitle">Показывать переключатель источника M3U над категориями Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Показывать переключатель провайдеров и объединенных источников над категориями Live TV.</string>
     <string name="settings_show_recent_channels_category">Показать категорию «Недавние каналы»</string>
     <string name="settings_show_recent_channels_category_subtitle">Показывать недавно просмотренные каналы в прямом ТВ и на главном экране.</string>
     <string name="settings_time_format">Формат времени</string>

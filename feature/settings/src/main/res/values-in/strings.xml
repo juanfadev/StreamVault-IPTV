@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Tampilkan kategori Favorit</string>
     <string name="settings_show_favorites_category_subtitle">Tampilkan grup Favorit virtual di penelusuran TV Langsung.</string>
     <string name="settings_show_live_source_switcher">Tampilkan Browser Sumber Live</string>
-    <string name="settings_show_live_source_switcher_subtitle">Tampilkan pengalih sumber M3U di atas kategori Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Tampilkan pengalih penyedia dan sumber gabungan di atas kategori Live TV.</string>
     <string name="settings_show_recent_channels_category">Tampilkan kategori Saluran Terkini</string>
     <string name="settings_show_recent_channels_category_subtitle">Tampilkan saluran yang baru ditonton di penelusuran Live TV dan layar Beranda.</string>
     <string name="settings_time_format">Format Waktu</string>

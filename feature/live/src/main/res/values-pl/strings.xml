@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Dart</string>
     <string name="live_sports_cycling">Kolarstwo</string>
     <string name="epg_recording_scheduled_notice">Zaplanowano nagrywanie: %1$s</string>     <string name="epg_recording_failed_notice">Nie udaÅ‚o siÄ™ zaplanowaÄ‡ nagrywania</string>
+    <string name="live_source_subtitle_provider">Dostawca</string>
+    <string name="live_source_subtitle_combined">Połączone źródło</string>
 </resources>

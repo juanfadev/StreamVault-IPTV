@@ -114,7 +114,7 @@
     <string name="settings_combined_add_playlist">Add playlist</string>
     <string name="settings_combined_delete">Delete</string>
     <string name="settings_combined_enabled_count">%1$d of %2$d playlists enabled</string>
-    <string name="settings_combined_empty">This combined source has no playlists. Add at least one M3U playlist before using it.</string>
+    <string name="settings_combined_empty">This combined source has no providers. Add at least one provider before using it.</string>
     <string name="settings_combined_all_disabled">All playlists in this combined source are disabled. Enable at least one to use it in Live TV.</string>
     <string name="settings_combined_move_up">Move up</string>
     <string name="settings_combined_move_down">Move down</string>
@@ -124,14 +124,14 @@
     <string name="settings_combined_name_hint">Combined source name</string>
     <string name="settings_combined_save">Save</string>
     <string name="settings_combined_create_title">Create combined source</string>
-    <string name="settings_combined_create_description">Choose the M3U playlists to browse together in Live TV and the guide.</string>
-    <string name="settings_combined_no_playlists">No M3U playlists are available. Add a playlist first.</string>
+    <string name="settings_combined_create_description">Choose the providers (M3U, Xtream Codes or Stalker) to browse together in Live TV and the guide. Selection order sets the backup priority.</string>
+    <string name="settings_combined_no_playlists">No compatible providers are available. Add an M3U, Xtream Codes or Stalker provider first.</string>
     <string name="settings_combined_add_title">Add playlist to %1$s</string>
-    <string name="settings_combined_add_description">Choose another M3U playlist for this combined source.</string>
-    <string name="settings_combined_all_added">All M3U playlists are already in this combined source.</string>
+    <string name="settings_combined_add_description">Choose another provider for this combined source.</string>
+    <string name="settings_combined_all_added">All compatible providers are already in this combined source.</string>
     <string name="settings_combined_add">Add</string>
-    <string name="settings_combined_section_title">Combined M3U</string>
-    <string name="settings_combined_section_description">Browse selected M3U playlists as one Live TV and guide source.</string>
+    <string name="settings_combined_section_title">Combined sources</string>
+    <string name="settings_combined_section_description">Browse several providers as one Live TV and guide source. Each channel appears once and the other providers act as automatic backups.</string>
     <string name="settings_combined_none">No combined sources yet.</string>
     <string name="settings_combined_playlist_fallback">Playlist %1$d</string>
     <string name="settings_combined_member_enabled">Enabled in combined source</string>
@@ -153,4 +153,35 @@
     <string name="settings_restore_item_title">%1$s · %2$s</string>
     <string name="settings_restore_dismiss_job">Dismiss restore</string>
     <string name="settings_restore_dismiss_job_description">Discard all remaining instructions</string>
+    <string name="settings_bulk_import_files_title">Choose a file</string>
+    <string name="settings_bulk_import_files_empty">No .txt, .m3u or .m3u8 files found. Copy the file to the Downloads folder or to %1$s and try again.</string>
+    <string name="settings_bulk_import">Bulk import</string>
+    <string name="settings_bulk_import_description">Paste one Xtream Codes URL per line (get.php or player_api.php) or choose a .txt/.m3u file. Only active accounts with a free connection are added as backups to a combined source.</string>
+    <string name="settings_bulk_import_hint">One URL per line</string>
+    <string name="settings_bulk_import_active_limit">Max active backups</string>
+    <string name="settings_bulk_import_active_limit_unlimited">No limit</string>
+    <string name="settings_bulk_import_active_limit_hint">Extra accounts with a free connection are added as disabled reserves without downloading their channels. Each active backup downloads its full channel list.</string>
+    <string name="settings_bulk_import_active_limit_decrease" translatable="false">−</string>
+    <string name="settings_bulk_import_active_limit_increase" translatable="false">+</string>
+    <string name="settings_bulk_import_choose_file">Choose file</string>
+    <string name="settings_bulk_import_start">Check and import</string>
+    <string name="settings_bulk_import_checking">Checking accounts: %1$d of %2$d</string>
+    <string name="settings_bulk_import_adding">Adding providers to the combined source…</string>
+    <string name="settings_bulk_import_done">Finished. Combined source: %1$s</string>
+    <string name="settings_bulk_import_line">Line %1$d · %2$s · %3$s: %4$s</string>
+    <string name="settings_bulk_import_line_invalid">Line %1$d: %2$s</string>
+    <string name="settings_bulk_import_count">%1$s: %2$d</string>
+    <string name="settings_bulk_import_pending">Checking…</string>
+    <string name="settings_bulk_import_file_error">Could not read the selected file.</string>
+    <string name="settings_bulk_import_default_profile">Backups</string>
+    <string name="settings_bulk_import_outcome_added">Added</string>
+    <string name="settings_bulk_import_outcome_updated">Re-checked</string>
+    <string name="settings_bulk_import_outcome_added_reserve">Added (reserve)</string>
+    <string name="settings_bulk_import_outcome_updated_reserve">Re-checked (reserve)</string>
+    <string name="settings_bulk_import_outcome_no_slots">No free slots</string>
+    <string name="settings_bulk_import_outcome_inactive">Inactive</string>
+    <string name="settings_bulk_import_outcome_unreachable">Unreachable</string>
+    <string name="settings_bulk_import_outcome_invalid">Invalid</string>
+    <string name="settings_bulk_import_outcome_duplicate">Duplicate</string>
+    <string name="settings_bulk_import_outcome_failed">Failed</string>
 </resources>

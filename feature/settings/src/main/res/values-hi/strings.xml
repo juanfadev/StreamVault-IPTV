@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">पसंदीदा श्रेणी दिखाएँ</string>
     <string name="settings_show_favorites_category_subtitle">लाइव टीवी ब्राउज़िंग में वर्चुअल पसंदीदा समूह दिखाएँ।</string>
     <string name="settings_show_live_source_switcher">लाइव स्रोत ब्राउज़र दिखाएँ</string>
-    <string name="settings_show_live_source_switcher_subtitle">लाइव टीवी ब्राउज़िंग के अंदर M3U स्रोत स्विचर दिखाएँ।</string>
+    <string name="settings_show_live_source_switcher_subtitle">लाइव टीवी ब्राउज़िंग के अंदर प्रदाता और संयुक्त स्रोत स्विचर दिखाएँ।</string>
     <string name="settings_show_recent_channels_category">हाल के चैनल श्रेणी दिखाएँ</string>
     <string name="settings_show_recent_channels_category_subtitle">लाइव टीवी ब्राउज़िंग और होम स्क्रीन पर हाल में देखे गए चैनल दिखाएँ।</string>
     <string name="settings_time_format">समय प्रारूप</string>

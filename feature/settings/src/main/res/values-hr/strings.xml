@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Prikaži kategoriju Omiljeni</string>
     <string name="settings_show_favorites_category_subtitle">Prikazuje virtualnu grupu Omiljeni u pregledavanju TV-a uživo.</string>
     <string name="settings_show_live_source_switcher">Prikaži preglednik izvora uživo</string>
-    <string name="settings_show_live_source_switcher_subtitle">Prikazuje prebacivač M3U izvora unutar pregledavanja TV-a uživo.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Prikazuje prebacivač pružatelja i kombiniranih izvora unutar pregledavanja TV-a uživo.</string>
     <string name="settings_show_recent_channels_category">Prikaži kategoriju Nedavni kanali</string>
     <string name="settings_show_recent_channels_category_subtitle">Prikazuje nedavno gledane kanale u pregledavanju TV-a uživo i na početnom zaslonu.</string>
     <string name="settings_time_format">Format vremena</string>

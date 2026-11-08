@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Tunjukkan kategori Kegemaran</string>
     <string name="settings_show_favorites_category_subtitle">Paparkan kumpulan maya Kegemaran dalam pelayaran TV Langsung.</string>
     <string name="settings_show_live_source_switcher">Tunjukkan Pelayar Sumber Langsung</string>
-    <string name="settings_show_live_source_switcher_subtitle">Paparkan penukar sumber M3U dalam pelayaran TV Langsung.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Paparkan penukar penyedia dan sumber gabungan dalam pelayaran TV Langsung.</string>
     <string name="settings_show_recent_channels_category">Tunjukkan kategori Saluran Terkini</string>
     <string name="settings_show_recent_channels_category_subtitle">Paparkan saluran yang baru ditonton dalam pelayaran TV Langsung dan pada skrin Halaman Utama.</string>
     <string name="settings_time_format">Format Masa</string>

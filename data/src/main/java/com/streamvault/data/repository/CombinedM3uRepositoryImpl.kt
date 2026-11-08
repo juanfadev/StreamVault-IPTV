@@ -14,22 +14,37 @@ import com.streamvault.domain.model.CombinedCategory
 import com.streamvault.domain.model.CombinedCategoryBinding
 import com.streamvault.domain.model.CombinedCategoryIdentity
 import com.streamvault.domain.model.CombinedM3uProfile
+import com.streamvault.domain.model.CombinedM3uProfileMember
 import com.streamvault.domain.model.ContentType
 import com.streamvault.domain.model.LegacyProvider as Provider
-import com.streamvault.domain.model.ProviderType
 import com.streamvault.domain.model.Result
+import com.streamvault.domain.model.supportsCombinedLiveSource
 import com.streamvault.domain.repository.ChannelRepository
 import com.streamvault.domain.repository.CombinedM3uRepository
 import com.streamvault.domain.repository.ProviderRepository
+import com.streamvault.domain.util.ChannelNormalizer
+import com.streamvault.domain.util.CrossProviderChannelIndex
+import com.streamvault.domain.util.CrossProviderChannelMerger
+import com.streamvault.domain.util.CrossProviderGrouping
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 
 @Singleton
 class CombinedM3uRepositoryImpl @Inject constructor(
@@ -37,8 +52,10 @@ class CombinedM3uRepositoryImpl @Inject constructor(
     private val memberDao: CombinedM3uProfileMemberDao,
     private val channelRepository: ChannelRepository,
     private val preferencesRepository: PreferencesRepository,
-    private val providerRepository: ProviderRepository
+    private val providerRepository: ProviderRepository,
+    private val repositoryScope: CoroutineScope
 ) : CombinedM3uRepository {
+    private val channelIndexFlows = ConcurrentHashMap<Long, SharedFlow<CrossProviderChannelIndex>>()
 
     override fun getProfiles(): Flow<List<CombinedM3uProfile>> =
         profileDao.getAll().flatMapLatest { profiles ->
@@ -66,13 +83,13 @@ class CombinedM3uRepositoryImpl @Inject constructor(
         }
         val distinctProviderIds = providerIds.distinct()
         if (distinctProviderIds.isEmpty()) {
-            return Result.error("Select at least one M3U provider.")
+            return Result.error("Select at least one provider.")
         }
         val providers = distinctProviderIds.mapNotNull { providerId ->
             providerRepository.getProvider(providerId)
         }
-        if (providers.size != distinctProviderIds.size || providers.any { it.type != ProviderType.M3U }) {
-            return Result.error("Combined profiles support M3U providers only.")
+        if (providers.size != distinctProviderIds.size || providers.any { !it.type.supportsCombinedLiveSource }) {
+            return Result.error("Combined sources support M3U, Xtream Codes and Stalker providers only.")
         }
         val now = System.currentTimeMillis()
         val profileId = profileDao.insert(
@@ -131,8 +148,8 @@ class CombinedM3uRepositoryImpl @Inject constructor(
         val profile = profileDao.getById(profileId) ?: return Result.error("Combined profile not found.")
         val provider = providerRepository.getProvider(providerId)
             ?: return Result.error("Provider not found.")
-        if (provider.type != ProviderType.M3U) {
-            return Result.error("Only M3U providers can be added to a combined profile.")
+        if (!provider.type.supportsCombinedLiveSource) {
+            return Result.error("Only M3U, Xtream Codes and Stalker providers can be added to a combined source.")
         }
         if (memberDao.getMember(profileId, providerId) != null) {
             return Result.success(Unit)
@@ -201,9 +218,9 @@ class CombinedM3uRepositoryImpl @Inject constructor(
     }
     }
 
-    override fun getAvailableM3uProviders(): Flow<List<Provider>> =
+    override fun getAvailableCombinableProviders(): Flow<List<Provider>> =
         providerRepository.getProviders().map { providers ->
-            providers.filter { it.type == ProviderType.M3U }
+            providers.filter { it.type.supportsCombinedLiveSource }
         }
 
     override fun getActiveLiveSource(): Flow<ActiveLiveSource?> =
@@ -227,14 +244,13 @@ class CombinedM3uRepositoryImpl @Inject constructor(
     }
 
     override fun getActiveLiveSourceOptions(): Flow<List<ActiveLiveSourceOption>> =
-        combine(getAvailableM3uProviders(), getProfiles()) { providers, profiles ->
+        combine(getAvailableCombinableProviders(), getProfiles()) { providers, profiles ->
             buildList {
                 providers.forEach { provider ->
                     add(
                         ActiveLiveSourceOption(
                             source = ActiveLiveSource.ProviderSource(provider.id),
                             title = provider.name,
-                            subtitle = "M3U Provider",
                             isEnabled = true
                         )
                     )
@@ -244,7 +260,6 @@ class CombinedM3uRepositoryImpl @Inject constructor(
                         ActiveLiveSourceOption(
                             source = ActiveLiveSource.CombinedM3uSource(profile.id),
                             title = profile.name,
-                            subtitle = "Combined M3U",
                             isEnabled = profile.enabled && profile.members.any { it.enabled }
                         )
                     )
@@ -259,7 +274,7 @@ class CombinedM3uRepositoryImpl @Inject constructor(
 
     override fun getCombinedCategories(profileId: Long): Flow<List<CombinedCategory>> =
         buildCombinedProfileFlow(profileId).flatMapLatest { profile ->
-            val memberProviders = profile?.members.orEmpty().filter { it.enabled }
+            val memberProviders = profile?.members.orEmpty().filter { it.enabled }.sortedBy { it.priority }
             if (memberProviders.isEmpty()) {
                 flowOf(emptyList())
             } else {
@@ -268,58 +283,52 @@ class CombinedM3uRepositoryImpl @Inject constructor(
                         channelRepository.getCategories(member.providerId),
                         preferencesRepository.getHiddenCategoryIds(member.providerId, ContentType.LIVE)
                     ) { categories, hiddenCategoryIds ->
-                        Triple(member, categories, hiddenCategoryIds)
+                        MemberCategories(member, categories, hiddenCategoryIds)
                     }
                 }
-                combine(categoryFlows) { arrays ->
-                    arrays.toList()
-                        .map { it as Triple<*, *, *> }
-                        .flatMap { triple ->
-                            val member = triple.first as com.streamvault.domain.model.CombinedM3uProfileMember
-                            val categories = triple.second as List<Category>
-                            val hiddenCategoryIds = triple.third as Set<Long>
-                            categories
-                                .filter {
-                                    !it.isVirtual &&
-                                        it.id != com.streamvault.domain.repository.ChannelRepository.ALL_CHANNELS_ID &&
-                                        it.id !in hiddenCategoryIds
-                                }
-                                .map { category ->
-                                    Triple(member, category, CombinedCategoryIdentity.keyForName(category.name))
-                                }
-                        }
-                        .groupBy { it.third }
-                        .values
-                        .map { group ->
-                            val first = group.first()
-                            val bindings = group.map { (member, category, _) ->
+                combine(categoryFlows) { memberCategories ->
+                    val priorities = memberProviders.associate { it.providerId to it.priority }
+                    val entries = memberCategories.flatMap { (member, categories, hiddenCategoryIds) ->
+                        categories
+                            .filter {
+                                !it.isVirtual &&
+                                    it.id != ChannelRepository.ALL_CHANNELS_ID &&
+                                    it.id !in hiddenCategoryIds
+                            }
+                            .map { category -> member to category }
+                    }
+                    CrossProviderGrouping.group(entries) { (_, category) ->
+                        ChannelNormalizer.crossProviderCategoryIdentity(category.name)
+                    }.map { group ->
+                        val representative = group.items.first().second
+                        val combinedId = CombinedCategoryIdentity.idForName(representative.name)
+                        CombinedCategory(
+                            category = representative.copy(
+                                id = combinedId,
+                                roomId = combinedId,
+                                name = representative.name,
+                                count = group.items.sumOf { it.second.count },
+                                isVirtual = false,
+                                isAdult = group.items.any { it.second.isAdult },
+                                isUserProtected = group.items.any { it.second.isUserProtected }
+                            ),
+                            bindings = group.items.map { (member, category) ->
                                 CombinedCategoryBinding(
                                     providerId = member.providerId,
                                     providerName = member.providerName,
                                     categoryId = category.id
                                 )
                             }
-                            CombinedCategory(
-                                category = first.second.copy(
-                                    id = CombinedCategoryIdentity.idForKey(first.third),
-                                    roomId = CombinedCategoryIdentity.idForKey(first.third),
-                                    name = first.second.name,
-                                    count = group.sumOf { it.second.count },
-                                    isVirtual = false,
-                                    isAdult = group.any { it.second.isAdult },
-                                    isUserProtected = group.any { it.second.isUserProtected }
-                                ),
-                                bindings = bindings
-                            )
-                        }
-                        .sortedWith(
-                            compareBy<CombinedCategory>(
-                                { category -> category.bindings.minOfOrNull { binding ->
-                                    memberProviders.firstOrNull { it.providerId == binding.providerId }?.priority ?: Int.MAX_VALUE
-                                } ?: Int.MAX_VALUE },
-                                { it.category.name.lowercase(Locale.ROOT) }
-                            )
                         )
+                    }.sortedWith(
+                        compareBy<CombinedCategory>(
+                            { category ->
+                                category.bindings.minOfOrNull { binding -> priorities[binding.providerId] ?: Int.MAX_VALUE }
+                                    ?: Int.MAX_VALUE
+                            },
+                            { it.category.name.lowercase(Locale.ROOT) }
+                        )
+                    )
                 }
             }
         }
@@ -330,35 +339,82 @@ class CombinedM3uRepositoryImpl @Inject constructor(
     override fun searchCombinedChannels(profileId: Long, category: CombinedCategory, query: String): Flow<List<Channel>> =
         combineMemberChannelFlows(profileId, category, query = query.trim())
 
+    override fun withCombinedBackups(profileId: Long, channels: Flow<List<Channel>>): Flow<List<Channel>> =
+        combine(
+            channels,
+            buildCombinedProfileFlow(profileId).map(::memberPriorities).distinctUntilChanged(),
+            optionalChannelIndexFlow(profileId)
+        ) { channelList, priorities, index ->
+            CrossProviderChannelMerger.attachBackups(channelList, priorities, index)
+        }.flowOn(Dispatchers.Default)
+
+    /**
+     * Channels of one combined category. The same channel coming from several member providers is
+     * collapsed into one entry whose variants are ordered by member priority, and the profile-wide
+     * index adds that channel's streams from other categories as backups for playback recovery.
+     */
     private fun combineMemberChannelFlows(
         profileId: Long,
         category: CombinedCategory,
         query: String?
     ): Flow<List<Channel>> =
         buildCombinedProfileFlow(profileId).flatMapLatest { profile ->
-            val enabledProviders = profile?.members.orEmpty().filter { it.enabled }.associateBy { it.providerId }
-            val bindings = category.bindings.filter { enabledProviders.containsKey(it.providerId) }
+            val priorities = memberPriorities(profile)
+            val bindings = category.bindings
+                .filter { priorities.containsKey(it.providerId) }
+                .sortedBy { priorities.getValue(it.providerId) }
             if (bindings.isEmpty()) {
                 flowOf(emptyList())
             } else {
                 val flows = bindings.map { binding ->
-                    val baseFlow = when {
+                    when {
                         query.isNullOrBlank() -> channelRepository.getChannelsByCategory(binding.providerId, binding.categoryId)
                         else -> channelRepository.searchChannelsByCategory(binding.providerId, binding.categoryId, query)
                     }
-                    baseFlow.map { channels ->
-                        val priority = enabledProviders[binding.providerId]?.priority ?: Int.MAX_VALUE
-                        priority to channels
-                    }
                 }
-                combine(flows) { arrays ->
-                    arrays.toList()
-                        .map { it as Pair<Int, List<Channel>> }
-                        .sortedBy { it.first }
-                        .flatMap { it.second }
-                }
+                combine(
+                    combine(flows) { channelLists -> channelLists.toList().flatten() },
+                    optionalChannelIndexFlow(profileId)
+                ) { channels, index ->
+                    CrossProviderChannelMerger.merge(channels, priorities, index)
+                }.flowOn(Dispatchers.Default)
             }
         }
+
+    /**
+     * Emits null first when the profile-wide index is not built yet, so category lists render
+     * immediately with in-category merging and gain cross-category backups once indexing finishes.
+     */
+    private fun optionalChannelIndexFlow(profileId: Long): Flow<CrossProviderChannelIndex?> {
+        val shared = channelIndexFlow(profileId)
+        return flow<CrossProviderChannelIndex?> {
+            if (shared.replayCache.isEmpty()) emit(null)
+            emitAll(shared)
+        }.distinctUntilChanged()
+    }
+
+    private fun channelIndexFlow(profileId: Long): SharedFlow<CrossProviderChannelIndex> =
+        channelIndexFlows.getOrPut(profileId) {
+            buildCombinedProfileFlow(profileId)
+                .map { profile ->
+                    profile?.members.orEmpty().filter { it.enabled }.sortedBy { it.priority }.map { it.providerId }
+                }
+                .distinctUntilChanged()
+                .flatMapLatest { providerIds ->
+                    if (providerIds.isEmpty()) {
+                        flowOf(CrossProviderChannelIndex.EMPTY)
+                    } else {
+                        combine(providerIds.map(channelRepository::getChannels)) { channelLists ->
+                            CrossProviderChannelMerger.buildIndex(channelLists.toList().flatten())
+                        }
+                    }
+                }
+                .flowOn(Dispatchers.Default)
+                .shareIn(repositoryScope, SharingStarted.WhileSubscribed(CHANNEL_INDEX_RETENTION_MS), replay = 1)
+        }
+
+    private fun memberPriorities(profile: CombinedM3uProfile?): Map<Long, Int> =
+        profile?.members.orEmpty().filter { it.enabled }.associate { it.providerId to it.priority }
 
     private fun buildCombinedProfileFlow(profileId: Long): Flow<CombinedM3uProfile?> =
         profileDao.getAll().map { profiles -> profiles.firstOrNull { it.id == profileId } }
@@ -366,4 +422,14 @@ class CombinedM3uRepositoryImpl @Inject constructor(
                 profile?.toDomain(members.map { it.toDomain() })
             }
 
+    private data class MemberCategories(
+        val member: CombinedM3uProfileMember,
+        val categories: List<Category>,
+        val hiddenCategoryIds: Set<Long>
+    )
+
+    private companion object {
+        /** Keeps the profile-wide channel index warm briefly between screens (Live TV -> player). */
+        const val CHANNEL_INDEX_RETENTION_MS = 30_000L
+    }
 }

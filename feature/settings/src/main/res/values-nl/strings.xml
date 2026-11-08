@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Categorie Favorieten tonen</string>
     <string name="settings_show_favorites_category_subtitle">Toon de virtuele groep Favorieten in het Live TV-browsen.</string>
     <string name="settings_show_live_source_switcher">Live-bronbrowser tonen</string>
-    <string name="settings_show_live_source_switcher_subtitle">Toon de M3U-bronwisselaar boven de Live TV-categorieën.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Toon de wisselaar voor providers en gecombineerde bronnen boven de Live TV-categorieën.</string>
     <string name="settings_show_recent_channels_category">Categorie Recente Zenders weergeven</string>
     <string name="settings_show_recent_channels_category_subtitle">Toon recent bekeken zenders in Live TV en op het startscherm.</string>
     <string name="settings_time_format">Tijdformaat</string>

@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Показвай категорията „Любими“</string>
     <string name="settings_show_favorites_category_subtitle">Показва виртуалната група „Любими“ при разглеждане на телевизията на живо.</string>
     <string name="settings_show_live_source_switcher">Показвай браузъра на източници на живо</string>
-    <string name="settings_show_live_source_switcher_subtitle">Показва превключвателя на M3U източници в разглеждането на телевизията на живо.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Показва превключвателя на доставчици и комбинирани източници в разглеждането на телевизията на живо.</string>
     <string name="settings_show_recent_channels_category">Показвай категорията „Скорошни канали“</string>
     <string name="settings_show_recent_channels_category_subtitle">Показва последно гледаните канали при разглеждане на телевизията на живо и на началния екран.</string>
     <string name="settings_time_format">Формат на времето</string>

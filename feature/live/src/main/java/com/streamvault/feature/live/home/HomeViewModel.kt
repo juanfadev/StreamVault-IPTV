@@ -32,6 +32,7 @@ import com.streamvault.domain.model.PlaybackHistory
 import com.streamvault.domain.model.Program
 import com.streamvault.domain.model.LegacyProvider as Provider
 import com.streamvault.domain.model.ProviderType
+import com.streamvault.domain.model.supportsCombinedLiveSource
 import com.streamvault.domain.model.Result
 import com.streamvault.domain.model.StreamInfo
 import com.streamvault.domain.model.StreamType
@@ -258,7 +259,8 @@ class HomeViewModel @Inject constructor(
                         liveSourceOptions = options.filter { option ->
                             when (val source = option.source) {
                                 is ActiveLiveSource.ProviderSource -> {
-                                    state.allProviders.firstOrNull { it.id == source.providerId }?.type == ProviderType.M3U
+                                    state.allProviders.firstOrNull { it.id == source.providerId }
+                                        ?.type?.supportsCombinedLiveSource == true
                                 }
                                 is ActiveLiveSource.CombinedM3uSource -> true
                             }
@@ -436,7 +438,8 @@ class HomeViewModel @Inject constructor(
                         liveSourceOptions = state.liveSourceOptions.filter { option ->
                             when (val source = option.source) {
                                 is ActiveLiveSource.ProviderSource ->
-                                    providers.firstOrNull { it.id == source.providerId }?.type == ProviderType.M3U
+                                    providers.firstOrNull { it.id == source.providerId }
+                                        ?.type?.supportsCombinedLiveSource == true
                                 is ActiveLiveSource.CombinedM3uSource -> true
                             }
                         }
@@ -754,11 +757,12 @@ class HomeViewModel @Inject constructor(
                         val allFlows = combinedCategoriesById.values.map { combinedCategory ->
                             combinedM3uRepository.getCombinedChannels(profileId, combinedCategory)
                         }
+                        // The same merged channel can live in several combined categories.
                         if (allFlows.isEmpty()) flowOf(emptyList())
-                        else combine(allFlows) { arrays -> arrays.toList().flatMap { it } }
+                        else combine(allFlows) { arrays -> arrays.toList().flatMap { it }.distinctBy { it.id } }
                     } else if (category.isVirtual) {
                         val providerIds = currentLiveProviderIds()
-                        when (category.id) {
+                        val orderedChannels = when (category.id) {
                             VirtualCategoryIds.RECENT -> {
                                 observeRecentLiveIds(providerIds, limit = 24)
                                     .flatMapLatest(::loadChannelsByOrderedIds)
@@ -775,6 +779,7 @@ class HomeViewModel @Inject constructor(
                                     .flatMapLatest(::loadChannelsByOrderedIds)
                             }
                         }
+                        combinedM3uRepository.withCombinedBackups(profileId, orderedChannels)
                     } else {
                         val combinedCategory = combinedCategoriesById[category.id]
                         if (combinedCategory == null) {
@@ -844,7 +849,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.map { it.parentalControlLevel }.distinctUntilChanged()
                 ) { channels, numberingMode, selectedCombinedSourceProviderId, level ->
                     val byProvider = selectedCombinedSourceProviderId?.let { selectedProviderId ->
-                        channels.filter { it.providerId == selectedProviderId }
+                        channels.mapNotNull { it.restrictedToProvider(selectedProviderId) }
                     } ?: channels
                     val numbered = when (numberingMode) {
                         ChannelNumberingMode.GROUP -> byProvider.mapIndexed { index, channel ->

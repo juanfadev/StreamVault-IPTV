@@ -71,6 +71,11 @@ abstract class RepositoryModule {
     abstract fun bindCombinedM3uRepository(impl: CombinedM3uRepositoryImpl): CombinedM3uRepository
 
     @Binds @Singleton
+    abstract fun bindXtreamAccountProbe(
+        impl: com.streamvault.data.remote.xtream.XtreamAccountProbeImpl
+    ): com.streamvault.domain.repository.XtreamAccountProbe
+
+    @Binds @Singleton
     abstract fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
 
     @Binds @Singleton

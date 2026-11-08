@@ -20,7 +20,8 @@ interface CombinedM3uRepository {
     suspend fun removeProvider(profileId: Long, providerId: Long): Result<Unit>
     suspend fun setMemberEnabled(profileId: Long, providerId: Long, enabled: Boolean): Result<Unit>
     suspend fun reorderMembers(profileId: Long, orderedProviderIds: List<Long>): Result<Unit>
-    fun getAvailableM3uProviders(): Flow<List<Provider>>
+    /** Providers that may join a combined source (M3U, Xtream Codes and Stalker). */
+    fun getAvailableCombinableProviders(): Flow<List<Provider>>
     fun getActiveLiveSource(): Flow<ActiveLiveSource?>
     suspend fun setActiveLiveSource(source: ActiveLiveSource?): Result<Unit>
     fun getActiveLiveSourceOptions(): Flow<List<ActiveLiveSourceOption>>
@@ -28,4 +29,10 @@ interface CombinedM3uRepository {
     fun getCombinedCategories(profileId: Long): Flow<List<CombinedCategory>>
     fun getCombinedChannels(profileId: Long, category: CombinedCategory): Flow<List<Channel>>
     fun searchCombinedChannels(profileId: Long, category: CombinedCategory, query: String): Flow<List<Channel>>
+
+    /**
+     * Attaches the same channel from the other member providers as backup variants to an explicit
+     * channel list (favorites, recents), keeping each entry's current variant first.
+     */
+    fun withCombinedBackups(profileId: Long, channels: Flow<List<Channel>>): Flow<List<Channel>>
 }

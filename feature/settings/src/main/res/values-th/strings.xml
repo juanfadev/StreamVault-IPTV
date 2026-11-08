@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">แสดงหมวดหมู่รายการโปรด</string>
     <string name="settings_show_favorites_category_subtitle">แสดงกลุ่มเสมือน “รายการโปรด” ในการเรียกดูทีวีสด</string>
     <string name="settings_show_live_source_switcher">แสดงตัวสลับแหล่งทีวีสด</string>
-    <string name="settings_show_live_source_switcher_subtitle">แสดงตัวสลับแหล่ง M3U ภายในหน้าจอเรียกดูทีวีสด</string>
+    <string name="settings_show_live_source_switcher_subtitle">แสดงตัวสลับผู้ให้บริการและแหล่งรวมภายในหน้าจอเรียกดูทีวีสด</string>
     <string name="settings_show_recent_channels_category">แสดงหมวดหมู่ช่องล่าสุด</string>
     <string name="settings_show_recent_channels_category_subtitle">แสดงช่องที่ดูล่าสุดในการเรียกดูทีวีสดและบนหน้าจอแรก</string>
     <string name="settings_time_format">รูปแบบเวลา</string>

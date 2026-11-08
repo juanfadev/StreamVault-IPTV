@@ -49,7 +49,7 @@ import com.streamvault.core.ui.theme.SurfaceElevated
 import com.streamvault.domain.model.ActiveLiveSource
 import com.streamvault.domain.model.CombinedM3uProfile
 import com.streamvault.domain.model.LegacyProvider as Provider
-import com.streamvault.domain.model.ProviderType
+import com.streamvault.domain.model.supportsCombinedLiveSource
 
 @Composable
 public fun CombinedM3uProfilesCard(
@@ -285,13 +285,13 @@ public fun CreateCombinedM3uDialog(
 ) {
     var name by rememberSaveable { mutableStateOf("") }
     var selectedProviderIds by rememberSaveable { mutableStateOf(setOf<Long>()) }
-    val m3uProviders = remember(providers) { providers.filter { it.type == ProviderType.M3U } }
-    val effectiveName = remember(name, selectedProviderIds, m3uProviders) {
+    val combinableProviders = remember(providers) { providers.filter { it.type.supportsCombinedLiveSource } }
+    val effectiveName = remember(name, selectedProviderIds, combinableProviders) {
         val manualName = name.trim()
         if (manualName.isNotBlank()) {
             manualName
         } else {
-            val selectedProviders = m3uProviders.filter { it.id in selectedProviderIds }
+            val selectedProviders = combinableProviders.filter { it.id in selectedProviderIds }
             when {
                 selectedProviders.isEmpty() -> ""
                 selectedProviders.size == 1 -> "${selectedProviders.first().name} Mix"
@@ -313,7 +313,7 @@ public fun CreateCombinedM3uDialog(
             placeholder = effectiveName.ifBlank { stringResource(R.string.settings_combined_name_hint) }
             )
 
-            if (m3uProviders.isEmpty()) {
+            if (combinableProviders.isEmpty()) {
                 Text(
                     text = stringResource(R.string.settings_combined_no_playlists),
                     style = MaterialTheme.typography.bodySmall,
@@ -327,7 +327,7 @@ public fun CreateCombinedM3uDialog(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    m3uProviders.forEach { provider ->
+                    combinableProviders.forEach { provider ->
                         val isSelected = provider.id in selectedProviderIds
                         TvClickableSurface(
                             onClick = {

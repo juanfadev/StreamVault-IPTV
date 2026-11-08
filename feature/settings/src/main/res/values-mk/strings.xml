@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Прикажи категорија „Омилени“</string>
     <string name="settings_show_favorites_category_subtitle">Прикажува ја виртуелната група „Омилени“ при прелистување на ТВ во живо.</string>
     <string name="settings_show_live_source_switcher">Прикажи прелистувач на извори во живо</string>
-    <string name="settings_show_live_source_switcher_subtitle">Прикажува го префрлувачот на M3U извори во прелистувањето на ТВ во живо.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Прикажува го префрлувачот на провајдери и комбинирани извори во прелистувањето на ТВ во живо.</string>
     <string name="settings_show_recent_channels_category">Прикажи категорија „Неодамнешни канали“</string>
     <string name="settings_show_recent_channels_category_subtitle">Прикажува неодамна гледани канали во прелистувањето на ТВ во живо и на почетната страница.</string>
     <string name="settings_time_format">Формат на време</string>

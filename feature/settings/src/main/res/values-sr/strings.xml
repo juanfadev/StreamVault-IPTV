@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Прикажи категорију Омиљени</string>
     <string name="settings_show_favorites_category_subtitle">Прикажи виртуелну групу Омиљени при прегледању ТВ-а уживо.</string>
     <string name="settings_show_live_source_switcher">Прикажи прегледач извора уживо</string>
-    <string name="settings_show_live_source_switcher_subtitle">Прикажи бирач M3U извора у прегледању ТВ-а уживо.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Прикажи бирач провајдера и комбинованих извора у прегледању ТВ-а уживо.</string>
     <string name="settings_show_recent_channels_category">Прикажи категорију Недавни канали</string>
     <string name="settings_show_recent_channels_category_subtitle">Прикажи недавно гледане канале у прегледању ТВ-а уживо и на почетном екрану.</string>
     <string name="settings_time_format">Формат времена</string>

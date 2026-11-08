@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Pokaż kategorię Ulubione</string>
     <string name="settings_show_favorites_category_subtitle">Wyświetlaj wirtualną grupę Ulubione w przeglądaniu telewizji na żywo.</string>
     <string name="settings_show_live_source_switcher">Pokaż przeglądarkę źródeł na żywo</string>
-    <string name="settings_show_live_source_switcher_subtitle">Wyświetl przełącznik źródła M3U nad kategoriami Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Wyświetl przełącznik dostawców i połączonych źródeł nad kategoriami Live TV.</string>
     <string name="settings_show_recent_channels_category">Pokaż kategorię Ostatnie kanały</string>
     <string name="settings_show_recent_channels_category_subtitle">Wyświetl ostatnio oglądane kanały podczas przeglądania TV na żywo i na ekranie głównym.</string>
     <string name="settings_time_format">Format czasu</string>

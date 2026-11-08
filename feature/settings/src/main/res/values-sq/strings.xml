@@ -212,7 +212,7 @@
     <string name="settings_show_favorites_category">Shfaq kategorinë Të preferuarat</string>
     <string name="settings_show_favorites_category_subtitle">Shfaq grupin virtual Të preferuarat në shfletimin e Live TV.</string>
     <string name="settings_show_live_source_switcher">Shfaq shfletuesin e burimeve live</string>
-    <string name="settings_show_live_source_switcher_subtitle">Shfaq ndërruesin e burimeve M3U brenda shfletimit të Live TV.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Shfaq ndërruesin e ofruesve dhe burimeve të kombinuara brenda shfletimit të Live TV.</string>
     <string name="settings_show_recent_channels_category">Shfaq kategorinë Kanalet e fundit</string>
     <string name="settings_show_recent_channels_category_subtitle">Shfaq kanalet e shikuara së fundmi në shfletimin e Live TV dhe në ekranin kryesor.</string>
     <string name="settings_time_format">Formati i orës</string>

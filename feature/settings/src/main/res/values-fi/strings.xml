@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Näytä Suosikit-kategoria</string>
     <string name="settings_show_favorites_category_subtitle">Näytä virtuaalinen Suosikit-ryhmä Live TV -selauksessa.</string>
     <string name="settings_show_live_source_switcher">Näytä live-lähdeselain</string>
-    <string name="settings_show_live_source_switcher_subtitle">Näytä M3U-lähteen vaihtaja Live TV -kategorioiden yläpuolella.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Näytä palveluntarjoajan ja yhdistetyn lähteen vaihtaja Live TV -kategorioiden yläpuolella.</string>
     <string name="settings_show_recent_channels_category">Näytä Viimeisimmät kanavat -kategoria</string>
     <string name="settings_show_recent_channels_category_subtitle">Näyttää viimeksi katsotut kanavat Live TV:ssä ja aloitusnäytöllä.</string>
     <string name="settings_time_format">Aikamuoto</string>

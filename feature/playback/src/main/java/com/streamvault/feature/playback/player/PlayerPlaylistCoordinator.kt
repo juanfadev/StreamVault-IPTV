@@ -48,6 +48,11 @@ class PlayerPlaylistCoordinator @Inject constructor(
         category: CombinedCategory
     ): Flow<List<Channel>> = combinedM3uRepository.getCombinedChannels(profileId, category)
 
+    internal fun withCombinedBackups(
+        profileId: Long,
+        channels: Flow<List<Channel>>
+    ): Flow<List<Channel>> = combinedM3uRepository.withCombinedBackups(profileId, channels)
+
     internal suspend fun getProfile(profileId: Long): CombinedM3uProfile? =
         combinedM3uRepository.getProfile(profileId)
 }

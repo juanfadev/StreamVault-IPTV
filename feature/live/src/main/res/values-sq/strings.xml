@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Hedhje shigjetash</string>
     <string name="live_sports_cycling">Çiklizëm</string>
     <string name="epg_recording_scheduled_notice">Regjistrimi u planifikua: %1$s</string>     <string name="epg_recording_failed_notice">Regjistrimi nuk mund tÃ« planifikohej</string>
+    <string name="live_source_subtitle_provider">Ofrues</string>
+    <string name="live_source_subtitle_combined">Burim i kombinuar</string>
 </resources>

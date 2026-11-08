@@ -10,6 +10,18 @@ data class ChannelClassification(
     val attributes: LiveChannelVariantAttributes
 )
 
+/**
+ * Provider-independent identity of a channel or category name.
+ *
+ * [nameKey] ignores country prefixes, quality/codec decorations, punctuation, accents and case.
+ * [region] is the explicit country/region code the provider attached (for example `ES` from
+ * `ES | La 1`), kept apart so names from different countries are not merged blindly.
+ */
+data class CrossProviderIdentity(
+    val nameKey: String,
+    val region: String? = null
+)
+
 object ChannelNormalizer {
     private val bracketRegex = Regex("""\[(.*?)]|\((.*?)\)|\|(.*?)\|""")
     private val leadingRegionRegex = Regex("""^\s*([a-z]{2,3})\s*[:\-]\s*""", RegexOption.IGNORE_CASE)
@@ -336,4 +348,18 @@ object ChannelNormalizer {
     private fun String.stripAccents(): String =
         Normalizer.normalize(this, Normalizer.Form.NFD)
             .replace(combiningMarksRegex, "")
-}
+
+    // ---- Cross-provider identity -------------------------------------------------------------
+
+    private val crossProviderBracketRegex = Regex("""\[([^\]]*)]|\(([^)]*)\)|\{([^}]*)}""")
+    private val crossProviderShortCodeRegex = Regex("""[a-z]{2,3}""")
+
+    /** Short words providers put in front of names that are not countries. */
+    private val crossProviderNonRegionWords = setOf(
+        "vip", "new", "top", "hot", "ppv", "tv", "bar", "fta", "ott", "max", "pro", "all", "the"
+    )
+
+    /** Short words providers put in front of names that are not countries. */
+    private val crossProviderNonRegionWords = setOf(
+        "vip", "new", "top", "hot", "ppv", "tv", "bar", "fta", "ott", "max", "pro", "all", "the"
+    )

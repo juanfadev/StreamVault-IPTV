@@ -29,24 +29,31 @@ internal fun PlayerViewModel.observeCombinedLivePlaylist(
             if (flows.isEmpty()) {
                 flowOf(emptyList())
             } else {
+                // The same merged channel can live in several combined categories.
                 combine(flows) { arrays ->
-                    arrays.toList().flatMap { it }
+                    arrays.toList().flatMap { it }.distinctBy { it.id }
                 }.map(::applyCombinedSourceProviderFilter)
             }
         }
     }
 
     categoryId == VirtualCategoryIds.RECENT -> {
-        combinedProviderIdsFlow(profileId)
-            .flatMapLatest { providerIds -> observeRecentLiveIds(effectiveCombinedProviderIds(providerIds), 24) }
-            .flatMapLatest { ids -> loadLiveChannelsByOrderedIds(ids, currentCombinedSourceFilterProviderId) }
+        withCombinedBackups(
+            profileId,
+            combinedProviderIdsFlow(profileId)
+                .flatMapLatest { providerIds -> observeRecentLiveIds(effectiveCombinedProviderIds(providerIds), 24) }
+                .flatMapLatest { ids -> loadLiveChannelsByOrderedIds(ids, currentCombinedSourceFilterProviderId) }
+        )
     }
 
     categoryId == VirtualCategoryIds.FAVORITES -> {
-        combinedProviderIdsFlow(profileId)
-            .flatMapLatest { providerIds -> observeLiveFavorites(effectiveCombinedProviderIds(providerIds)) }
-            .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
-            .flatMapLatest { ids -> loadLiveChannelsByOrderedIds(ids, currentCombinedSourceFilterProviderId) }
+        withCombinedBackups(
+            profileId,
+            combinedProviderIdsFlow(profileId)
+                .flatMapLatest { providerIds -> observeLiveFavorites(effectiveCombinedProviderIds(providerIds)) }
+                .map { favorites -> favorites.sortedBy { it.position }.map { it.contentId } }
+                .flatMapLatest { ids -> loadLiveChannelsByOrderedIds(ids, currentCombinedSourceFilterProviderId) }
+        )
     }
 
     categoryId < 0L -> {
@@ -62,6 +69,7 @@ internal fun PlayerViewModel.observeCombinedLivePlaylist(
                     .map { it.contentId }
             }
             .flatMapLatest { ids -> loadLiveChannelsByOrderedIds(ids, currentCombinedSourceFilterProviderId) }
+            .let { channels -> withCombinedBackups(profileId, channels) }
     }
 
     else -> {
@@ -257,12 +265,22 @@ internal fun PlayerViewModel.loadPlaylist(
             if (targetId != -1L) {
                 currentChannelIndex = channelList.indexOfFirst { it.id == targetId }
             }
+            if (currentChannelIndex == -1 && targetId != -1L) {
+                // Combined sources merge backup providers into one entry; after a failover the
+                // playing stream is one of its other variants.
+                currentChannelIndex = channelList.indexOfFirst { targetId in it.allVariantRawIds() }
+            }
             if (currentChannelIndex == -1) {
                 currentChannelIndex = channelList.indexOfFirst { it.streamUrl == currentStreamUrl }
             }
 
             if (currentChannelIndex != -1) {
-                currentChannelFlow.value = channelList[currentChannelIndex].sanitizedForPlayer()
+                val listedChannel = channelList[currentChannelIndex]
+                val playingChannel = listedChannel
+                    .takeIf { it.id != targetId && targetId != -1L }
+                    ?.withSelectedVariant(targetId)
+                    ?: listedChannel
+                currentChannelFlow.value = playingChannel.sanitizedForPlayer()
                 refreshCurrentChannelRecording()
                 val channel = channelList[currentChannelIndex]
                 displayChannelNumberFlow.value = resolveChannelNumber(channel, currentChannelIndex)
@@ -279,8 +297,16 @@ internal fun PlayerViewModel.loadPlaylist(
 
 private fun PlayerViewModel.applyCombinedSourceProviderFilter(channels: List<Channel>): List<Channel> {
     val selectedProviderId = currentCombinedSourceFilterProviderId ?: return channels
-    return channels.filter { it.providerId == selectedProviderId }
+    return channels.mapNotNull { it.restrictedToProvider(selectedProviderId) }
 }
+
+/** Backups only make sense when the whole profile is browsed, not a single-provider filter. */
+private fun PlayerViewModel.withCombinedBackups(profileId: Long, channels: Flow<List<Channel>>): Flow<List<Channel>> =
+    if (currentCombinedSourceFilterProviderId != null) {
+        channels
+    } else {
+        playerPlaylistCoordinator.withCombinedBackups(profileId, channels)
+    }
 
 private fun PlayerViewModel.loadLiveChannelsByOrderedIds(
     ids: List<Long>,

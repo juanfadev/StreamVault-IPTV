@@ -192,7 +192,7 @@
     <string name="settings_show_favorites_category">Vis kategorien Favoritter</string>
     <string name="settings_show_favorites_category_subtitle">Vis den virtuelle gruppe Favoritter, når du gennemser Live TV.</string>
     <string name="settings_show_live_source_switcher">Vis live-kildebrowser</string>
-    <string name="settings_show_live_source_switcher_subtitle">Vis M3U-kildeskifteren over Live TV-kategorier.</string>
+    <string name="settings_show_live_source_switcher_subtitle">Vis skifteren for udbydere og kombinerede kilder over Live TV-kategorier.</string>
     <string name="settings_show_recent_channels_category">Vis kategorien Seneste kanaler</string>
     <string name="settings_show_recent_channels_category_subtitle">Vis senest sete kanaler i Live TV-browsing og på startskærmen.</string>
     <string name="settings_time_format">Tidsformat</string>

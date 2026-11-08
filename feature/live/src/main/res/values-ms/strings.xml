@@ -319,4 +319,6 @@
     <string name="live_sports_darts">Dart</string>
     <string name="live_sports_cycling">Berbasikal</string>
     <string name="epg_recording_scheduled_notice">Rakaman dijadualkan: %1$s</string>     <string name="epg_recording_failed_notice">Rakaman tidak dapat dijadualkan</string>
+    <string name="live_source_subtitle_provider">Penyedia</string>
+    <string name="live_source_subtitle_combined">Sumber gabungan</string>
 </resources>
