@@ -451,5 +451,18 @@ class ProviderSyncWorkerTest {
         assertThat(updatedProvider.firstValue.status).isEqualTo(ProviderStatus.ERROR)
         assertThat(updatedProvider.firstValue.lastSyncedAt).isEqualTo(provider.lastSyncedAt)
         verify(syncManager, never()).currentSyncState(9L)
+
+    @Test
+    fun `automatic sweeps skip reserve-only providers unless active`() {
+        fun provider(id: Long, active: Boolean) =
+            ProviderEntity(id = id, name = "P$id", type = ProviderType.XTREAM_CODES, isActive = active)
+        val enabledMember = provider(1L, active = false)
+        val reserve = provider(2L, active = false)
+        val activeReserve = provider(3L, active = true)
+        val standalone = provider(4L, active = false)
+        val all = listOf(enabledMember, reserve, activeReserve, standalone)
+
+        assertThat(excludeReserveOnlyProviders(all, reserveOnlyProviderIds = setOf(2L, 3L)))
+            .containsExactly(enabledMember, activeReserve, standalone).inOrder()
+        assertThat(excludeReserveOnlyProviders(all, reserveOnlyProviderIds = emptySet())).isEqualTo(all)
     }
-}

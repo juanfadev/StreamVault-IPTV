@@ -2,6 +2,14 @@
 
 All notable product changes are recorded in this document.
 
+## [Unreleased]
+
+### Added
+- Combined sources now accept Xtream Codes and Stalker providers alongside M3U playlists, and the Live TV source switcher can switch between those providers and combined sources.
+- Combined sources merge the same live channel across member providers (ignoring country prefixes such as `ES |`, quality tags such as FHD/HEVC/RAW and decorative glyphs), list it once, and merge equivalent categories such as `ES | DEPORTES` and `ES DEPORTES`.
+- Added Settings → Providers → Bulk import: paste or pick a file of Xtream Codes URLs; each account is checked through `player_api.php` and every active account with a free connection is added as a backup to a combined source (re-imports re-check existing providers instead of duplicating them). Only up to **Max active backups** (default 8, or **No limit**) stay enabled; the rest are saved as disabled reserve members without downloading their channels, and automatic sync skips reserves until they are enabled.
+- Live playback recovery in a combined source fails over to the same channel on the next provider (in member priority order), resolving each stream with its own provider credentials; favorites and recents in a combined source gain the same backups.
+
 ## [1.2.4]
 
 ### Added

@@ -21,7 +21,13 @@ import com.streamvault.domain.model.StalkerTransportConsentRequiredException
 import com.streamvault.domain.repository.ProviderRepository
 import com.streamvault.domain.repository.ProviderSetupRequest
 import com.streamvault.domain.model.XtreamConfig
-import com.streamvault.domain.model.M3uConfig
+        val repairConnection: Boolean = false,
+        /**
+         * Xtream only: authenticate and save a new provider without the initial catalog sync, without
+         * activating it and without queueing follow-up work. An already configured provider with the
+         * same identity is returned unchanged. Used for reserve backups of a combined source.
+         */
+        val deferInitialSync: Boolean = false
 import com.streamvault.domain.model.StalkerConfig
 import com.streamvault.domain.model.StalkerDeviceIdentity
 import com.streamvault.domain.model.JellyfinConfig
@@ -42,7 +48,9 @@ data class XtreamProviderSetupCommand(
     val xtreamLiveSyncMode: ProviderXtreamLiveSyncMode = ProviderXtreamLiveSyncMode.AUTO,
     val guideSourcePolicy: GuideSourcePolicy = GuideSourcePolicy.AUTO,
     val channelLogoSourcePolicy: ChannelLogoSourcePolicy = ChannelLogoSourcePolicy.SUPPLIER_PREFERRED,
-    val existingProviderId: Long? = null
+    val existingProviderId: Long? = null,
+    /** Save a new provider without downloading its catalog; see [ProviderSetupRequest.Configured.deferInitialSync]. */
+    val deferInitialSync: Boolean = false
 )
 
 data class M3uProviderSetupCommand(
@@ -229,7 +237,8 @@ class ValidateAndAddProvider @Inject constructor(
                         guideSourcePolicy = command.guideSourcePolicy,
                         channelLogoSourcePolicy = command.channelLogoSourcePolicy
                     ),
-                    existingProviderId = command.existingProviderId
+                    existingProviderId = command.existingProviderId,
+                    deferInitialSync = command.deferInitialSync
                 ),
                 onProgress = onProgress
             ).toUseCaseResult()

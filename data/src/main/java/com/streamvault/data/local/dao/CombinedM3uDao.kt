@@ -69,11 +69,7 @@ interface CombinedM3uProfileMemberDao {
     suspend fun countForProfile(profileId: Long): Int
 
     @Query("DELETE FROM combined_m3u_profile_members WHERE profile_id = :profileId")
-    suspend fun deleteForProfile(profileId: Long)
 
-    @Transaction
-    suspend fun replacePriorities(profileId: Long, members: List<CombinedM3uProfileMemberEntity>) {
-        deleteForProfile(profileId)
-        members.forEach { insert(it) }
-    }
-}
+    /** Providers that belong to combined sources only as disabled (reserve) members. */
+    @Query("SELECT provider_id FROM combined_m3u_profile_members GROUP BY provider_id HAVING MAX(enabled) = 0")
+    suspend fun getReserveOnlyProviderIds(): List<Long>

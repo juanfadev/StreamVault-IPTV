@@ -60,6 +60,8 @@ internal object PreferenceBackupRegistry {
     )
     private val deviceBoundStorageKeys = setOf(
         "download_tree_uri",
+        // Sized to the device's storage: each enabled backup source keeps a full channel catalog.
+        "bulk_import_active_backup_limit",
     )
     private val runtimeStorageKeys = setOf(
         "parental_v2_migrated", "parental_pin", "live_variant_observations", "vod_variant_observations",
