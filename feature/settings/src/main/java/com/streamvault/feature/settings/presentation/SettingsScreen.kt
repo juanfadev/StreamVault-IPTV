@@ -1,5 +1,11 @@
 package com.streamvault.feature.settings.presentation
 
+import kotlinx.coroutines.withContext
+
+import kotlinx.coroutines.launch
+
+import kotlinx.coroutines.Dispatchers
+
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.net.Uri
@@ -199,12 +205,27 @@ public fun SettingsScreen(
     }
 
     var pendingImportCandidates by remember { mutableStateOf<List<BackupDialogItem>>(emptyList()) }
+    var showImportCandidates by remember { mutableStateOf(false) }
 
+    /**
+     * Picker-free restore (TV path and SAF fallback). Scans off the main thread and always opens the
+     * chooser — with an explanatory empty state — instead of a transient snackbar, so the action is
+     * visibly handled on TVs without DocumentsUI.
+     */
     fun restoreBackupFromLocalStorage() {
-        val candidates = platformHost.backupFiles.listPickerFreeBackups()
-            .map {
+        scope.launch {
+            val files = withContext(Dispatchers.IO) {
+                val managed = runCatching { platformHost.backupFiles.listPickerFreeBackups() }
+                    .getOrDefault(emptyList())
+                    .map { LocalImportFile(it.displayName, it.uri.toString(), it.lastModifiedMs) }
+                LocalImportFileScanner.merge(
+                    managed,
+                    LocalImportFileScanner.scan(context, LocalImportFileScanner.BACKUP_EXTENSIONS)
+                )
+            }
+            val candidates = files.map {
                 BackupDialogItem(
-                    id = it.uri.toString(),
+                    id = it.uri,
                     title = it.displayName,
                     subtitle = formatBackupTimestamp(
                         it.lastModifiedMs,
@@ -212,11 +233,12 @@ public fun SettingsScreen(
                     ),
                 )
             }
-        when {
-            candidates.isEmpty() ->
-                viewModel.showUserMessage(noLocalBackupsMessage)
-            candidates.size == 1 -> viewModel.inspectBackup(candidates.first().id)
-            else -> pendingImportCandidates = candidates
+            if (candidates.size == 1) {
+                viewModel.inspectBackup(candidates.first().id)
+            } else {
+                pendingImportCandidates = candidates
+                showImportCandidates = true
+            }
         }
     }
 
@@ -755,7 +777,7 @@ public fun SettingsScreen(
         )
     }
 
-    if (pendingImportCandidates.isNotEmpty()) {
+    if (showImportCandidates || pendingImportCandidates.isNotEmpty()) {
         BackupSelectionDialog(
             title = stringResource(R.string.settings_backup_choose_file_title),
             subtitle = stringResource(R.string.settings_restore_subtitle),
@@ -763,9 +785,13 @@ public fun SettingsScreen(
             emptyMessage = noLocalBackupsMessage,
             onSelect = { uri ->
                 pendingImportCandidates = emptyList()
+                showImportCandidates = false
                 viewModel.inspectBackup(uri)
             },
-            onDismiss = { pendingImportCandidates = emptyList() },
+            onDismiss = {
+                pendingImportCandidates = emptyList()
+                showImportCandidates = false
+            },
         )
     }
 
